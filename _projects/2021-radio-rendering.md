@@ -38,6 +38,21 @@ Using these results, the script iteratively updated the chord and twist distribu
   After the optimized geometry converged, the Python script exported the chord, twist, and radial positioning data needed for CAD modeling. Using the design parameters I generated, my teammate created a full 3D model of the blade assembly, which our instructor then sent to an external fabrication partner for high-resolution SLA printing using Accura 25. The resulting parts closely matched our intended geometry and provided a durable prototype suitable for wind-tunnel evaluation. The printed blades were later used for experimental testing in the course.
 </p>
 
+<div style="display:flex; justify-content:center; align-items:flex-start; gap:2rem; flex-wrap:wrap; margin:2rem 0;">
+
+  <!-- Blade CAD Render -->
+  <div style="text-align:center;">
+    <div style="width:300px; height:300px; overflow:hidden; border-radius:1rem; margin-bottom:0.5rem;">
+      <img src="{{ '/assets/images/blade-cad.png' | relative_url }}"
+           alt="Wind Turbine Blade CAD Model"
+           style="width:100%; height:100%; object-fit:contain; display:block;">
+    </div>
+    <p style="font-size:0.95rem; color:#111; margin:0;">CAD Model of Final Blade Geometry</p>
+  </div>
+
+</div>
+
+
 ## Prototype Testing
 
 <div style="display:flex; justify-content:center; align-items:flex-start; gap:2rem; flex-wrap:wrap; margin:2rem 0;">
