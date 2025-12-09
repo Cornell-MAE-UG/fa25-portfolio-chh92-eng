@@ -1,25 +1,98 @@
 ---
 layout: project
-title: Radio CAD Rendering
-description: Advanced CAD Project
-technologies: [Autodesk Fusion]
-image: /assets/images/radio-machine-cad.jpg
+title: MAE 4272
+description: Wind Turbine Blade Design
+technologies: [Autodesk Fusion, Google Colab]
+image: /assets/images/project-3.jpg
 ---
 
-For a class, we were asked to CAD a complex object. This design was...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut nec accumsan leo. Pellentesque ornare orci enim, vitae vestibulum nibh rutrum in. Donec pharetra risus nec ipsum fringilla, et mattis tortor auctor. Duis tortor ante, posuere ut odio a, scelerisque interdum purus. Aenean faucibus luctus est, sed bibendum tellus. 
+# Wind Turbine Blade Design
 
-Nulla et magna urna. Morbi a ipsum sollicitudin, rhoncus risus volutpat, ultricies nunc. Quisque mollis finibus ante id imperdiet. Quisque vehicula elit sit amet felis facilisis fermentum.
+## Overview
 
-![Shaded rendering of earlier version]({{ "/assets/images/radio-machine.jpg" | relative_url }}){: .inline-image-r style="width: 200px"}
+<p style="text-align:justify;">
+  <figure style="float:right; width:380px; margin:0 0 1rem 1.5rem; text-align:center;">
+    <img src="{{ '/assets/images/project-3-blades.jpeg' | relative_url }}"
+         alt="Printed Blades"
+         style="width:100%; height:auto; border-radius:1rem; display:block; margin-bottom:0.4rem;">
+    <figcaption style="font-size:0.9rem; color:#111;">Printed Blades</figcaption>
+  </figure>
+  For this project, I was a part of a team was tasked with designing the blades for a small-scale wind turbine that would operate within strict geometric and performance constraints. The turbine had to use a standardized 1-inch hub, accept blades no longer than 6 inches, and run at a fixed angular velocity not exceeding 2000 RPM. We were also required to optimize performance for a wind environment characterized by a Weibull distribution with parameters k = 5 and c = 5, representing typical mid-range wind conditions.
+</p>
 
-Nulla et magna urna. Morbi a ipsum sollicitudin, rhoncus risus volutpat, ultricies nunc. Quisque mollis finibus ante id imperdiet. Quisque vehicula elit sit amet felis facilisis fermentum.
+The objective was to engineer a blade geometry that maximized aerodynamic efficiency under these operating conditions while remaining fully manufacturable for 3D printing and compatible with the course’s testing apparatus. The final design included a complete aerodynamic analysis, CAD modeling of the optimized geometry, and preparation for downstream fabrication and testing.
 
-Aenean tincidunt aliquam arcu, in euismod dui dapibus eu. In placerat, mi et ultrices consequat, quam ligula cursus mauris, in semper neque nibh at est. Maecenas hendrerit dignissim porta. Phasellus nec fringilla dolor. Etiam efficitur nisi sit amet velit pharetra feugiat. Etiam ultrices turpis at leo semper, eleifend scelerisque neque malesuada. Aliquam molestie congue rhoncus. Donec blandit neque dolor, nec tristique mi pretium ac. Mauris tincidunt ullamcorper magna, nec pellentesque mi sagittis quis.
+## Design Process
+To develop an efficient and manufacturable blade, I wrote a custom Python script that automated the full aerodynamic design and optimization workflow. The script began by generating interpolated lift and drag polars for the NACA 4412 airfoil across the Reynolds-number range expected on a 6-inch blade. These polars served as inputs to a Blade Element Momentum Theory (BEMT) model that I also implemented in Python, allowing us to compute induced velocities, aerodynamic loading, and the local flow angle at each radial station.
 
-I was inspired by this old radio when I made this rendering:
+Using these results, the script iteratively updated the chord and twist distributions to maintain an optimal angle of attack and circulation distribution along the span. Each iteration combined the BEMT solution with ideal loading expressions, Prandtl tip and root loss models, and numerical stabilization techniques to ensure convergence under low-Reynolds conditions near the hub. Once the aerodynamic solution stabilized, I incorporated smoothing routines to ensure the final geometry met manufacturability constraints and the project’s axial projection limits.
 
-![Photo of old radio]({{ "/assets/images/old-radio.jpg" | relative_url }}){: .inline-image-l}
+<p style="text-align:justify; margin-bottom:2.5rem;">
+  <figure style="float:right; width:300px; height:300px; margin:0 0 1rem 1.5rem; text-align:center;">
+    <img src="{{ '/assets/images/project-3.jpg' | relative_url }}"
+         alt="Full Wind Turbine"
+         style="width:100%; height:100%; object-fit:cover; border-radius:1rem; display:block; margin-bottom:0.4rem;">
+    <figcaption style="font-size:0.9rem; color:#111;">Full Wind Turbine</figcaption>
+  </figure>
 
-Aenean tincidunt aliquam arcu, in euismod dui dapibus eu. In placerat, mi et ultrices consequat, quam ligula cursus mauris, in semper neque nibh at est. Maecenas hendrerit dignissim porta. Phasellus nec fringilla dolor. Etiam efficitur nisi sit amet velit pharetra feugiat. Etiam ultrices turpis at leo semper, eleifend scelerisque neque malesuada. Aliquam molestie congue rhoncus. Donec blandit neque dolor, nec tristique mi pretium ac. Mauris tincidunt ullamcorper magna, nec pellentesque mi sagittis quis.
+  After the optimized geometry converged, the Python script exported the chord, twist, and radial positioning data needed for CAD modeling. Using the design parameters I generated, my teammate created a full 3D model of the blade assembly, which our instructor then sent to an external fabrication partner for high-resolution SLA printing using Accura 25. The resulting parts closely matched our intended geometry and provided a durable prototype suitable for wind-tunnel evaluation. The printed blades were later used for experimental testing in the course.
+</p>
 
-Aenean tincidunt aliquam arcu, in euismod dui dapibus eu. In placerat, mi et ultrices consequat, quam ligula cursus mauris, in semper neque nibh at est. Maecenas hendrerit dignissim porta. Phasellus nec fringilla dolor. Etiam efficitur nisi sit amet velit pharetra feugiat. Etiam ultrices turpis at leo semper, eleifend scelerisque neque malesuada. Aliquam molestie congue rhoncus. Donec blandit neque dolor, nec tristique mi pretium ac. Mauris tincidunt ullamcorper magna, nec pellentesque mi sagittis quis.
+## Prototype Testing
+
+<div style="display:flex; justify-content:center; align-items:flex-start; gap:2rem; flex-wrap:wrap; margin:2rem 0;">
+
+  <!-- Front view -->
+  <div style="text-align:center;">
+    <div style="width:300px; height:300px; overflow:hidden; border-radius:1rem; margin-bottom:0.5rem;">
+      <img src="{{ '/assets/images/project-3-setup.jpeg' | relative_url }}"
+           alt="Device Casing CAD - Front"
+           style="width:100%; height:100%; object-fit:cover; display:block;">
+    </div>
+    <p style="font-size:0.95rem; color:#111; margin:0;">Turbine in Wind Tunnel</p>
+  </div>
+</div>
+
+To determine the power output of our blade, we constructed the wind turbine using the three 3D-printed blades and a provided aluminum hub. The turbine was then mounted in a wind tunnel, where my group members and I could run the blade at different wind speeds. Over a range of **3.17 m/s** to **5.56 m/s**, at four separate constant wind velocities, we applied torque from a 5BZ Magnetic Particle Brake. Using a VI, we could determine the power generated by recording the rate of rotation and the torque applied by the brake. As we increased the torque for each test, we collected data that would allow us to construct a series of power curves. At our highest velocity, our blade acheived a power output of 1.29 Watts.
+
+## Results
+
+Our final blade prototype successfully produced over 1 W of power during testing and maintained full structural integrity under load. Although the design targeted peak performance around **5.04 m/s**, the measured output continued to rise through **5.56 m/s** without a clear performance plateau, suggesting the blade had additional operating headroom.
+
+During testing we also observed a resonance or transitional behavior between **2100–2500 RPM**, which did not compromise performance but indicates a dynamic region worth further study. While the blade was designed for a tip-speed ratio (TSR) of ~3, the experimental system consistently operated closer to **TSR ≈ 6**, showing that the rotor performed effectively even outside its intended design envelope. Overall, the prototype was under-designed relative to its achieved operating conditions but still delivered strong and consistent performance.
+
+<div style="display:flex; justify-content:center; align-items:flex-start; gap:2rem; flex-wrap:wrap; margin:2rem 0;">
+
+  <!-- Front view -->
+  <div style="text-align:center;">
+    <div style="width:550px; height:350px; overflow:hidden; border-radius:1rem; margin-bottom:0.5rem;">
+      <img src="{{ '/assets/images/project3_blade_power.png' | relative_url }}"
+           alt="Power Generated Plotted Against RPM"
+           style="width:100%; height:100%; object-fit:cover; display:block;">
+    </div>
+    <p style="font-size:0.95rem; color:#111; margin:0;">Power Generated Plotted Against RPM</p>
+  </div>
+
+  <!-- Back view -->
+  <div style="text-align:center;">
+    <div style="width:550px; height:375px; overflow:hidden; border-radius:1rem; margin-bottom:0.5rem;">
+      <img src="{{ '/assets/images/project3_blade_power2.png' | relative_url }}"
+           alt="Power Generated Plotted Against Wind Speed at Constant RPM"
+           style="width:100%; height:100%; object-fit:cover; display:block;">
+    </div>
+    <p style="font-size:0.95rem; color:#111; margin:0;">Power Generated Plotted Against Wind Speed at Constant RPM</p>
+  </div>
+
+</div>
+
+## Future Iterations (Hypothetical)
+
+If this project were continued, several refinements could be explored to better align the blade geometry with its experimentally observed operating regime:
+
+- **Increase the design TSR**, since the experimental rotor naturally operated at much higher tip-speed ratios than expected.
+- **Investigate the unusual aspects of the current geometry**, especially the chord and twist interactions at outer stations.
+- **Experiment with larger chord lengths** at higher radii to improve aerodynamic loading where our blade showed margin.
+- **Characterize and mitigate the resonance zone** to make dynamic behavior more predictable across RPM ranges.
+
+These adjustments would help bridge the gap between the original design assumptions and the conditions under which the blade actually performed best.
+
